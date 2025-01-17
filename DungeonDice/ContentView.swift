@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    enum Dice: Int {
+    enum Dice: Int, CaseIterable {
         case four = 4
         case six = 6
         case eight = 8
@@ -40,11 +40,17 @@ struct ContentView: View {
             
             Spacer()
             
-            Button("\(Dice.four.rawValue)-sided") {
-                resultMessage = "You've rolled \(Dice.four.roll()) on a \(Dice.four.rawValue)-sided dice"
+            Group {
+                ForEach(Dice.allCases, id: \.self) { dice in
+                    Button("\(dice.rawValue)-sided") {
+                        resultMessage = "You've rolled \(dice.roll()) on a \(dice.rawValue)-sided dice"
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                }
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.red)
+            
+            
         }
         .padding()
     }
